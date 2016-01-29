@@ -1,7 +1,4 @@
 /* jshint node: true */
-
-var youtubeApiKey = require('./youtube-api-key');
-
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'earworm',
@@ -16,7 +13,8 @@ module.exports = function(environment) {
     },
 
     APP: {
-      youtubeApiKey : youtubeApiKey
+      youtubeApiKey       : getYoutubeApiKey(),
+      soundCloudApiKey    : getSoundCloudApiKey()
     }
   };
 
@@ -45,4 +43,20 @@ module.exports = function(environment) {
   }
 
   return ENV;
+};
+var getYoutubeApiKey = function() {
+  try {
+    return require('./youtube-api-key');
+  } catch(e) {
+    console.log('***** NO YOUTUBE API KEY FOUND');
+    return null;
+  }
+};
+var getSoundCloudApiKey = function() {
+  try {
+    return require('./soundCloudApiKey.local');
+  } catch(e) {
+    console.log('***** NO YOUTUBE API KEY FOUND');
+    return null;
+  }
 };

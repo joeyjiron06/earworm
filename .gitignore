@@ -18,3 +18,4 @@ npm-debug*
 npm-debug.log
 testem.log
 config/youtube-api-key.js
+config/soundCloudApiKey.local.js
