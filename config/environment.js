@@ -56,7 +56,7 @@ var getSoundCloudApiKey = function() {
   try {
     return require('./soundCloudApiKey.local');
   } catch(e) {
-    console.log('***** NO YOUTUBE API KEY FOUND');
+    console.log('***** NO SOUNDCLOUD API KEY FOUND');
     return null;
   }
 };
