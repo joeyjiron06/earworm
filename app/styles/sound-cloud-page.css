@@ -1,0 +1,39 @@
+.soundcloud-page {
+}
+
+.scp-search-button {
+  background-color    : #2B81AF;
+  padding             : 0.25rem 1.25rem;
+  color               : white;
+  transition          : all 250ms;
+}
+.scp-search-button:hover {
+  background-color    : #78BADE;
+}
+
+.scp-search-results-list {
+  display      : flex;
+  flex-direction: column;
+}
+
+.scp-search-result-item {
+  display        : flex;
+  margin         : 1rem;
+  align-items    : center;
+  transition: all 250ms;
+}
+.scp-search-result-item:hover {
+  background-color    : #0D3349;
+  color             : white;
+  /*font-weight       : bold;*/
+}
+
+.scp-search-result-item-artwork {
+  width                  : 100px;
+  height                 : 100px;
+  background-position    : center;
+  background-size        : cover;
+}
+.scp-search-result-item-title {
+  margin-left: 1rem;
+}

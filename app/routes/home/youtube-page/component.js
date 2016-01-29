@@ -3,8 +3,8 @@ import YouTube from './YouTube';
 
 
 export default Ember.Component.extend({
-  tagName : 'home-home-page',
-  classNames : ['home-home-page'],
+  tagName : 'home-youtube-page',
+  classNames : ['home-youtube-page'],
 
   query : null,
   items : null,
