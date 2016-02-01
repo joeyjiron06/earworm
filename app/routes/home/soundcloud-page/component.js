@@ -1,9 +1,6 @@
 import Ember from 'ember';
 import SoundCloud from './SoundCloud';
 import AppConfig from 'earworm/config/app-config';
-import AudioPlayer from './audio-player/AudioPlayer';
-
-let SoundCloudPlayer = new AudioPlayer();
 
 export default Ember.Component.extend({
   tagName    : 'soundcloud-page',
@@ -12,38 +9,42 @@ export default Ember.Component.extend({
   query : null,
   items : null,
 
+  outAudioItem : new Audio(),
+
   didInsertElement() {
     this._super(...arguments);
-    SoundCloudPlayer.setListener(this);
+
+    //this.set('outAudioItem', );
   },
 
 
   actions : {
     searchClicked() {
-      this.searchWithMyApi();
+      let query = this.get('query');
+      let filter = 'public';
+      let promise = SoundCloud.search({query:query, filter:filter})
+        .then((data) => {
+          console.log('success', data);
+          this.set('items', data);
+        });
+      promise = promise.catch((error) => {
+        console.log('error searching', error);
+      });
     },
     itemClicked(song) {
-      this.playSongWithMyPlayer(song);
+      console.log('playing song', song);
+      let songUrl     = song.stream_url;
+      let finalUrl    = `${songUrl}?client_id=${AppConfig.soundcloud.apiKey}`;
+
+      let audio = this.getAudio();
+      audio.src = finalUrl;
+      audio.play();
     }
   },
 
 
-  searchWithMyApi() {
-    let query = this.get('query');
-    let filter = 'public';
-    let promise = SoundCloud.search({query:query, filter:filter})
-      .then((data) => {
-        console.log('success', data);
-        this.set('items', data);
-      });
-    promise = promise.catch((error) => {
-      console.log('error searching', error);
-    });
-  },
-  playSongWithMyPlayer(song) {
-    console.log(song);
-    let url = `${song['stream_url']}?client_id=${AppConfig.soundcloud.apiKey}`;
-    SoundCloudPlayer.setUrl(url);
-    SoundCloudPlayer.play();
+
+  getAudio() {
+    return this.get('outAudioItem');
   }
 });

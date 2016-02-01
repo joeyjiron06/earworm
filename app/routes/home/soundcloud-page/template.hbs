@@ -1,6 +1,11 @@
 <h2>SoundClound Sync</h2>
+
+
 {{input value=query type='text'}}
 <span class="scp-search-button" {{action 'searchClicked'}}>Search</span>
+
+
+{{components/audio-player audio=outAudioItem}}
 
 <div class="scp-search-results-list">
   {{#each items as |item|}}

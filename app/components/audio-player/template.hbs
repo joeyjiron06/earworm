@@ -1,0 +1,26 @@
+<div class="ap--play-area">
+  {{!-- PLAY BUTTON --}}
+  {{#if options.showPlayPauseButton}}
+    <i class="ap--play-pause-button fa fa-{{{displayable.playPauseState}}}-circle" {{action 'playPauseToggled'}} ></i>
+  {{/if}}
+
+  {{!-- PLAYED TIME --}}
+  <div class="ap--played-time">{{displayable.playedTime}}</div>
+
+  {{!-- PLAY BAR --}}
+  <div class="ap--play-bar">
+    {{!-- BUFFERED RANGES --}}
+    {{#each displayable.bufferedRanges as |range|}}
+      <div class="ap--play-bar-buffered-fill" style="left:{{{range.leftPercentage}}}%; width:{{{range.widthPercentage}}}%;"></div>
+    {{/each}}
+
+    {{!-- PLAYED BAR --}}
+    <div class="ap--play-bar-fill" style="width:{{{displayable.playPercentage}}}%;"></div>
+  </div>
+
+  {{!-- DURATION TIME --}}
+  <div class="ap--duration-time">{{displayable.durationTime}}</div>
+</div>
+
+
+

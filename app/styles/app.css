@@ -1,5 +1,12 @@
 @import "sound-cloud-page.css";
+@import "audio-player.css";
 
 body {
-  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+  font-family         : "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+  background-color    : #222;
+  color : white;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
