@@ -10,7 +10,12 @@
 .scp-search-button:hover {
   background-color    : #78BADE;
 }
-
+.scp-new-room-button {
+  background-color    : #78BADE;
+  display: inline-block;
+  padding: 0.5rem;
+  cursor: pointer;
+}
 .scp-search-results-list {
   display      : flex;
   flex-direction: column;
@@ -36,4 +41,12 @@
 }
 .scp-search-result-item-title {
   margin-left: 1rem;
+}
+.scp-disabled-button {
+  background-color: #666666;
+}
+.scp-search-input {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border-style: none;
 }

@@ -1,26 +1,28 @@
 import AppConfig from 'earworm/config/app-config';
 import HTTP from './Http';
-
-const SoundCloud = function(config, http) {
-  const my = this;
-
-  // PUBLIC
-  my.search = (settings) => {
-    return get(`/tracks?q=${settings.query}&filter=${settings.filter}`);
-  };
-
-  // PRIVATE
-  const get = (url) =>  {
-    return http.get(`${config.soundcloud.urls.BASE}${url}&client_id=${config.soundcloud.apiKey}`);
-  };
+import SearchFixtures from 'earworm/fixtures/soundcloud/search-john-mayer';
 
 
-  return my;
-};
+class SoundCloud {
+
+  constructor(config, http) {
+    this.config = config;
+    this.http = http;
+  }
+
+  search(settings) {
+    if (this.config.useFixtures) {
+      return Promise.resolve(SearchFixtures);
+    }
+
+    let baseUrl     = this.config.soundcloud.urls.BASE;
+    let apiKey      = this.config.soundcloud.apiKey;
+    let endpoint    = `/tracks?q=${settings.query}&filter=${settings.filter}`;
 
 
-const fixtures = {};
-fixtures.search = {};
+    return this.http.get(`${baseUrl}${endpoint}&client_id=${apiKey}`);
+  }
+}
 
 const instance = new SoundCloud(AppConfig, HTTP);
 

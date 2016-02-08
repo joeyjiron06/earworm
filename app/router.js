@@ -11,7 +11,7 @@ Router.map(function() {
       this.route('audio');
     });
     this.route('home');
-
+    this.route('login');
   });
 });
 

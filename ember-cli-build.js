@@ -28,5 +28,16 @@ module.exports = function(defaults) {
   app.import("vendor/font-awesome/fonts/fontawesome-webfont.woff2", { destDir: "fonts" });
   app.import("vendor/font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
 
+
+  app.import({
+    development: app.bowerDirectory + '/firebase/firebase-debug.js',
+    production: app.bowerDirectory + '/firebase/firebase.js'
+  });
+
+  app.import('vendor/shims/firebase.js', {
+    type: 'vendor',
+    exports: { 'firebase': ['default'] }
+  });
+
   return app.toTree();
 };

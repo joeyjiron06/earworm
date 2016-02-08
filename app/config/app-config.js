@@ -2,7 +2,7 @@ import ENV from 'earworm/config/environment';
 
 
 var config       =  {
-  useFixtures    : false,
+  useFixtures    : true,
 
   youtube        : {
     apiKey       : ENV.APP.youtubeApiKey
@@ -13,6 +13,12 @@ var config       =  {
       BASE       : 'https://api.soundcloud.com'
     },
     apiKey       : ENV.APP.soundCloudApiKey
+  },
+
+  firebase : {
+    urls : {
+      BASE : 'https://earworm.firebaseio.com'
+    }
   }
 };
 

@@ -1,5 +1,6 @@
-@import "sound-cloud-page.css";
-@import "audio-player.css";
+@import "component-audio-player.css";
+@import "page-login.css";
+@import "page-sound-cloud.css";
 
 body {
   font-family         : "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;

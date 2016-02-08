@@ -1,4 +1,11 @@
 /* jshint node: true */
+console.logOnce = function(message) {
+  if (!console[message]) {
+    console[message] = message;
+    console.log(message);
+  }
+};
+
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'earworm',
@@ -48,7 +55,7 @@ var getYoutubeApiKey = function() {
   try {
     return require('./youtube-api-key');
   } catch(e) {
-    console.log('***** NO YOUTUBE API KEY FOUND');
+    console.logOnce('***** NO YOUTUBE API KEY FOUND');
     return null;
   }
 };
@@ -56,7 +63,7 @@ var getSoundCloudApiKey = function() {
   try {
     return require('./soundCloudApiKey.local');
   } catch(e) {
-    console.log('***** NO SOUNDCLOUD API KEY FOUND');
+    console.logOnce('***** NO SOUNDCLOUD API KEY FOUND');
     return null;
   }
 };

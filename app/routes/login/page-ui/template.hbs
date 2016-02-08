@@ -1,0 +1,23 @@
+
+
+<div class="login-button-area">
+  {{#if isUsernameEnabled}}
+    {{input type="text" value=username placeholder="Choose a username" class=(if isBadUsername 'login-input login-input-bad' 'login-input')}}
+
+    {{#if isBadUsername}}
+      <div class="login-bad-username-text">Please enter a username.</div>
+    {{/if}}
+  {{/if}}
+
+
+  {{#if isIdle}}
+    <div class="login-button" {{action 'login'}}>Guest Login</div>
+  {{else if isLoading}}
+    <div class="login-button login-pulse">Loading...</div>
+  {{else if isError}}
+    <div class="login-button">Loading Error</div>
+  {{else if isLoaded}}
+    <div class="login-button">Success!</div>
+  {{/if}}
+
+</div>

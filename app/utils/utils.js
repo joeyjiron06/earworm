@@ -48,4 +48,18 @@ export default class Utils {
   static isFunction(item) {
     return Object.prototype.toString.call(item) === '[object Function]';
   }
+
+  static parseWindowParameter(keyToFind) {
+    let args = window.location.search.substr(1).split("&");
+
+    for (let arg of args) {
+      let keyValPairs    = arg.split("=");
+      let key            = keyValPairs[0];
+      if (key === keyToFind) {
+        return decodeURIComponent(keyValPairs[1]);
+      }
+    }
+
+    return null;
+  }
 }

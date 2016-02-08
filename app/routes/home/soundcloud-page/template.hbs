@@ -1,11 +1,27 @@
 <h2>SoundClound Sync</h2>
 
+<div>
+  <span>Search: </span> {{input value=query type='text' enter="enterPressed" class="scp-search-input"}}
+</div>
 
-{{input value=query type='text'}}
-<span class="scp-search-button" {{action 'searchClicked'}}>Search</span>
+
+{{!--<div class="scp-new-room-button {{unless flags.newRoomButtonEnabled 'scp-disabled-button' }}" {{action 'newRoomClicked'}} >New Room</div>--}}
+{{#if isEnteringRoom}}
+  <div>Entering : {{displayable.roomId}}</div>
+{{else if isErrorEnteringRoom}}
+  <div>Error entering room: {{displayable.roomId}}</div>
+{{else if isSuccessEnteringRoom}}
+  <div>In room : {{displayable.room.name}}</div>
+
+  <div>Users in room:</div>
+  {{#each displayable.room.displayableUsers as |user|}}
+    <div>{{user.id}}</div>
+  {{/each}}
+
+{{/if}}
 
 
-{{components/audio-player audio=outAudioItem}}
+{{components/audio-player audio=outlets.audio}}
 
 <div class="scp-search-results-list">
   {{#each items as |item|}}
