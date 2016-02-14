@@ -39,5 +39,8 @@ module.exports = function(defaults) {
     exports: { 'firebase': ['default'] }
   });
 
+
+  app.import(app.bowerDirectory + '/material-design-lite/material.css');
+
   return app.toTree();
 };

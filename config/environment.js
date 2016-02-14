@@ -1,11 +1,4 @@
 /* jshint node: true */
-console.logOnce = function(message) {
-  if (!console[message]) {
-    console[message] = message;
-    console.log(message);
-  }
-};
-
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'earworm',
@@ -18,9 +11,10 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-
+    sassOptions: {
+      includePaths: ['bower_components/material-design-lite/src']
+    },
     APP: {
-      youtubeApiKey       : getYoutubeApiKey(),
       soundCloudApiKey    : getSoundCloudApiKey()
     }
   };
@@ -51,12 +45,10 @@ module.exports = function(environment) {
 
   return ENV;
 };
-var getYoutubeApiKey = function() {
-  try {
-    return require('./youtube-api-key');
-  } catch(e) {
-    console.logOnce('***** NO YOUTUBE API KEY FOUND');
-    return null;
+console.logOnce = function(message) {
+  if (!console[message]) {
+    console[message] = message;
+    console.log(message);
   }
 };
 var getSoundCloudApiKey = function() {

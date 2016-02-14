@@ -12,8 +12,8 @@ const ROOM_STATE = {
 };
 
 export default Ember.Component.extend({
-  tagName                   : 'soundcloud-page',
-  classNames : ['soundcloud-page'],
+  tagName                   : 'home-page',
+  classNames                : ['home-page'],
 
   query                     : null,
   items                     : null,
