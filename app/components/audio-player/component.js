@@ -88,6 +88,12 @@ export default Ember.Component.extend({
 
   registerListener() {
     let audio      = this.getAudio();
+
+    if (!audio) {
+      console.warn('[audio-player] :: no audio player');
+      return;
+    }
+
     let updated    = this.audioUpdated.bind(this);
     let events     = this.getAudioEventList();
 

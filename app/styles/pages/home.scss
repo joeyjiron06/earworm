@@ -30,8 +30,12 @@
   .hp--player-controls {
     display: flex;
     width: 100px;
+    margin-left: 20px;
+    align-items: center;
+
     .hp--player-button {
       color: $color-black;
+      margin-right: 10px;
     }
   }
 }
