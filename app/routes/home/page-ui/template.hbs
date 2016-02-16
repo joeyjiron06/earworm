@@ -1,7 +1,7 @@
 <div class="hp--nav-bar">
   {{!-- LOGO --}}
   <div class="hp--logo">
-    <div>e</div>
+    <div style="width: 44px;">e</div>
   </div>
 
   {{!-- PLAYER CONTROLS --}}
@@ -12,7 +12,46 @@
   </div>
 
   {{!-- PLAYER BAR --}}
-  {{components/audio-player}}
+  <div class="hp--player-bar">
+    <div class="hp--player-title">{{songTitle}}</div>
+    {{!--<div class="hp--player-subtitle">Ain't wasting time no more</div>--}}
 
 
+    {{components/audio-player audio=audio}}
+  </div>
+
+  {{mdl-textfield
+    isExpandable=true
+    label='Search'
+    expandableIcon='search'
+    value=searchValue
+    class='hp--search-input'
+    }}
+
+
+  {{!-- AVATAR --}}
+  <div>
+    <img class="hp--avatar" src="http://www.colibriblog.net/wp-content/uploads/2013/05/Sea-Turtle-HD-Wallpaper.jpg"/>
+  </div>
 </div>
+
+{{!-- CONTENT AREA --}}
+<div class="hp--content-area">
+  {{!-- QUEUE --}}
+  <div class="hp--queue">
+    <div class="hp--queue-title">Queue</div>
+    <div>Add items to your queue</div>
+  </div>
+
+  {{!-- SEARCH RESULTS --}}
+  <div class="hp--search-results">
+    <div class="hp--search-results-title">Results for Sublime</div>
+
+    {{#each items as |item|}}
+      {{search-item item=item class="hp--search-item" playClicked='playClicked' addClicked='addClicked'}}
+    {{/each}}
+  </div>
+</div>
+
+
+

@@ -2,7 +2,7 @@ import ENV from 'earworm/config/environment';
 
 
 var config       =  {
-  useFixtures    : true,
+  useFixtures    : false,
 
   youtube        : {
     apiKey       : ENV.APP.youtubeApiKey

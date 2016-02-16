@@ -1,3 +1,47 @@
 .audio-player {
+  color : $color-text-black;
+  width: 100%;
 
+  .ap--play-area {
+    display             : flex;
+    align-items         : center;
+    width               : 100%;
+    height              : 3rem;
+    //background-color    : #222;
+  }
+  .ap--play-pause-button {
+    font-size           : 1.5rem;
+    margin-left         : 1rem;
+  }
+  .ap--play-bar {
+    background-color    : #444;
+    height              : 0.3rem;
+    width               : 100%;
+    margin-left         : 1rem;
+    border-radius       : 2rem;
+    position            : relative;
+  }
+  .ap--play-bar-fill {
+    background-color    : #57A87F;
+    height              : 100%;
+    width               : 0;
+    border-radius       : 2rem;
+    position            : absolute;
+    top                 : 0;
+    left                : 0;
+  }
+  .ap--played-time {
+    margin-left         : 1rem;
+  }
+  .ap--duration-time {
+    margin-left         : 1rem;
+    margin-right        : 1rem;
+  }
+  .ap--play-bar-buffered-fill {
+    position            : absolute;
+    background-color    : #666;
+    height              : 100%;
+    border-radius       : 2rem;
+    transition: width 0.25s;
+  }
 }

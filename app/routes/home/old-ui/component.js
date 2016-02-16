@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import SoundCloud from './SoundCloud';
+import SoundCloud from './../../../api/soundcloud/Soundcloud';
 import AppConfig from 'earworm/config/app-config';
 import Firebase from 'earworm/api/firebase/firebase';
 import Utils from 'earworm/utils/utils';

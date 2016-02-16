@@ -3,39 +3,101 @@
   height                : 100%;
   background-color      : $color-bg;
   position              : absolute;
+  display               : flex;
+  flex-direction        : column;
 
   .hp--nav-bar {
     display             : flex;
+    align-items         : center;
     background-color    : white;
     height              : 64px;
-    padding             : 10px 40px;
+    padding             : 20px 20px;
+    box-shadow          : 0 1px 4px rgba(0,0,0,0.2);
   }
 
   .hp--logo {
     display             : flex;
     align-items         : center;
     justify-content     : center;
+    width               : 44px;
+    height              : 44px;
     background-color    : $color-primary;
     border-radius       : 200px;
     padding             : 10px;
-    width               : 44px;
     text-align          : center;
     vertical-align      : middle;
     color               : white;
     font-size           : 24px;
   }
 
-
-
   .hp--player-controls {
-    display: flex;
-    width: 100px;
-    margin-left: 20px;
-    align-items: center;
+    display             : flex;
+    width               : 100px;
+    margin-left         : 20px;
+    align-items         : center;
 
     .hp--player-button {
-      color: $color-black;
-      margin-right: 10px;
+      color             : $color-black;
+      margin-right      : 10px;
     }
   }
+
+  .hp--player-bar {
+    width               : 100%;
+    text-align          : center;
+  }
+
+  .hp--avatar {
+    width               : 44px;
+    height              : 44px;
+    border-radius       : 44px;
+    //box-shadow        : 2px 2px 2px rgba(20,20,20,0.2);
+  }
+
+
+  .hp--queue {
+    background-color    : $color-black;
+    width               : 200px;
+    color               : $color-text-grey-lite;
+    padding-top         : 20px;
+    padding-left        : 20px;
+    padding-right       : 20px;
+    box-shadow          : 2px 2px 2px rgba(0,0,0,0.4);
+
+    .hp--queue-title {
+      font-size         : 24px;
+    }
+  }
+
+  .hp--content-area {
+    width               : 100%;
+    display             : flex;
+    flex-direction      : row;
+    flex-grow           : 1;
+  }
+  .hp--search-results {
+    flex-grow           : 1;
+    padding             : 20px;
+  }
+
+  .hp--search-results-title {
+    font-size           : 18px;
+    color               : $color-text-black;
+  }
+
+  .hp--search-input {
+    margin-right: 20px;
+    //transition: min-width 2s;
+    //
+    //
+    //&.is-focused {
+    //  min-width: 200px;
+    //}
+  }
+
+  .hp--search-item {
+    margin-bottom: 10px;
+  }
+
+
 }
