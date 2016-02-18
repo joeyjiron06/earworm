@@ -1,3 +1,6 @@
+@import "_color-definitions";
+$color-primary: $palette-blue-500;
+$color-accent: $palette-yellow-300;
 @import 'material-design-lite';
 @import "values/colors";
 @import "pages/home";

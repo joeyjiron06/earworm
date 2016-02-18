@@ -14,7 +14,7 @@
     margin-left         : 1rem;
   }
   .ap--play-bar {
-    background-color    : #444;
+    background-color    : #999;
     height              : 0.3rem;
     width               : 100%;
     margin-left         : 1rem;
@@ -22,7 +22,6 @@
     position            : relative;
   }
   .ap--play-bar-fill {
-    background-color    : #57A87F;
     height              : 100%;
     width               : 0;
     border-radius       : 2rem;
@@ -39,7 +38,7 @@
   }
   .ap--play-bar-buffered-fill {
     position            : absolute;
-    background-color    : #666;
+    background-color    : #bbb;
     height              : 100%;
     border-radius       : 2rem;
     transition: width 0.25s;

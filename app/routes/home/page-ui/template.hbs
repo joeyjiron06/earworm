@@ -1,8 +1,6 @@
 <div class="hp--nav-bar">
   {{!-- LOGO --}}
-  <div class="hp--logo">
-    <div style="width: 44px;">e</div>
-  </div>
+  {{#mdl-button class='hp--logo' isColored=true isRaised=true isAccent=false}}e{{/mdl-button}}
 
   {{!-- PLAYER CONTROLS --}}
   <div class="hp--player-controls">
@@ -30,17 +28,23 @@
 
 
   {{!-- AVATAR --}}
-  <div>
-    <img class="hp--avatar" src="http://www.colibriblog.net/wp-content/uploads/2013/05/Sea-Turtle-HD-Wallpaper.jpg"/>
-  </div>
+  {{!--<div>--}}
+    {{!--<img class="hp--avatar" src="http://www.colibriblog.net/wp-content/uploads/2013/05/Sea-Turtle-HD-Wallpaper.jpg"/>--}}
+  {{!--</div>--}}
 </div>
 
 {{!-- CONTENT AREA --}}
 <div class="hp--content-area">
   {{!-- QUEUE --}}
-  <div class="hp--queue">
+  <div class="hp--queue mdl-color--grey-900">
     <div class="hp--queue-title">Queue</div>
-    <div>Add items to your queue</div>
+
+    {{#each songQueue as |item|}}
+      {{search-item item=item class="hp--search-item" playClicked='playClicked' addClicked='addClicked'}}
+
+    {{else}}
+      <div>Add items to your queue</div>
+    {{/each}}
   </div>
 
   {{!-- SEARCH RESULTS --}}
@@ -49,6 +53,8 @@
 
     {{#each items as |item|}}
       {{search-item item=item class="hp--search-item" playClicked='playClicked' addClicked='addClicked'}}
+    {{else}}
+      <div>No items.</div>
     {{/each}}
   </div>
 </div>

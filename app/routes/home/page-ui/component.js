@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Soundcloud from 'earworm/api/soundcloud/Soundcloud';
+import SoundCloud from 'earworm/api/soundcloud/SoundCloud';
 import SearchFixtures from 'earworm/fixtures/soundcloud/search-john-mayer';
 
 
@@ -12,6 +12,8 @@ export default Ember.Component.extend({
   audio            : new Audio(),
   songTitle        : null,
 
+  songQueue        : [],
+
 
   didInsertElement() {
     this._super(...arguments);
@@ -21,7 +23,7 @@ export default Ember.Component.extend({
   actions          : {
     playClicked(item) {
       let title = item.title;
-      let url = Soundcloud.getUrl(item.stream_url);
+      let url = SoundCloud.getUrl(item.stream_url);
       let audio = this.get('audio');
       this.set('songTitle', title);
       audio.src =  url;
@@ -31,6 +33,7 @@ export default Ember.Component.extend({
     },
     addClicked(item) {
       console.log('add clicked', item);
+      this.get('songQueue').addObject(item);
     }
   },
 
@@ -45,7 +48,7 @@ export default Ember.Component.extend({
 
   search() {
     let text       = this.get('searchValue');
-    let promise    = Soundcloud.search({query:text, filter:'public'})
+    let promise    = SoundCloud.search({query:text, filter:'public'})
       .then((data) => {
         console.log('success', data);
         this.set('items', data);
