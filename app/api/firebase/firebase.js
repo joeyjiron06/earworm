@@ -51,7 +51,22 @@ export default Ember.Object.create({
       }, sessionParameters);
     });
   },
+  authWithFacebookPopup() {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      this.getFirebase().authWithOAuthPopup("facebook", function(error, authData) {
+        if (error) {
+          reject(FirebaseError.create({error: error}));
+        }
 
+        else {
+          resolve(FirebaseResponse.create({data: authData}));
+        }
+      },
+      {scope: "email,user_likes"});
+    });
+  },
+
+  //  R O O M S
   getRooms() {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('roomsRef').once('value',
@@ -66,7 +81,6 @@ export default Ember.Object.create({
       );
     });
   },
-
   getRoom(roomId) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.get('roomsRef').child(roomId).once('value',
@@ -81,8 +95,6 @@ export default Ember.Object.create({
       );
     });
   },
-
-
   createNewRoom(roomName) {
     return new Ember.RSVP.Promise((resolve, reject) => {
       let roomsRef      = this.get('roomsRef');
@@ -138,6 +150,4 @@ export default Ember.Object.create({
       userRef.onDisconnect().remove();
     });
   }
-
-
 });

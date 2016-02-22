@@ -3,6 +3,8 @@ $color-primary: $palette-blue-500;
 $color-accent: $palette-yellow-300;
 @import 'material-design-lite';
 @import "values/colors";
+@import "pages/page-base";
 @import "pages/home";
+@import "pages/login";
 @import "component/audio-player";
 @import "component/search-item";

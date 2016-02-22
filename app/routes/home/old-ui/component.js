@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     roomId                  : null,
     room                    : null,
   },
-  roomState                 : ROOM_STATE.IDLE,
+  roomState                 : ROOM_STATE.NOT_LOADED,
   isEnteringRoom            : Ember.computed.equal('roomState', ROOM_STATE.LOADING),
   isErrorEnteringRoom       : Ember.computed.equal('roomState', ROOM_STATE.ERROR),
   isSuccessEnteringRoom     : Ember.computed.equal('roomState', ROOM_STATE.SUCCESS),
