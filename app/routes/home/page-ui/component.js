@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import SoundCloud from 'earworm/api/soundcloud/SoundCloud';
 import SearchFixtures from 'earworm/fixtures/soundcloud/search-john-mayer';
+import Earworm from 'earworm/application/earworm';
 
 
 export default Ember.Component.extend({
@@ -13,8 +14,16 @@ export default Ember.Component.extend({
   songTitle        : null,
 
   songQueue        : [],
+  displayableUserImage : null,
 
+  init() {
+    this._super(...arguments);
 
+    let user = Earworm.AppState.get('user');
+    if (user) {
+      this.set('displayableUserImage', user.facebook.profileImageURL);
+    }
+  },
   didInsertElement() {
     this._super(...arguments);
     this.$('.mdl-textfield__input').keypress(this.onSearchInputKeyPress.bind(this));
