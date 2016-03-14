@@ -4,28 +4,26 @@ import FirebaseError from './FirebaseError';
 import FirebaseResponse from './FirebaseResponse';
 import AppConfig from 'earworm/config/app-config';
 import UserItem from 'earworm/models/UserItem';
+import RoomItem from 'earworm/models/RoomItem';
 
 export default Ember.Object.create({
 
   // firebase data
-  firebase          : null,
-  roomsRef : null,
-
-
-  // data
-  user : null,
+  _firebase          : null,
+  _roomsRef : null,
 
 
 
   init() {
     let firebase    = new Firebase(AppConfig.firebase.urls.BASE);
-
-    this.set('firebase', firebase);
-    this.set('roomsRef', firebase.child('rooms'));
+    this.set('_firebase', firebase);
   },
 
   getFirebase() {
-    return this.get('firebase');
+    return this.get('_firebase');
+  },
+  getRoomsRef() {
+    return this.getFirebase().child('rooms');
   },
 
   /**
@@ -43,9 +41,6 @@ export default Ember.Object.create({
 
         else {
           let userItem = UserItem.createFromResponse(data);
-
-          this.set('user', userItem);
-
           resolve(FirebaseResponse.create({data: userItem}));
         }
       }, sessionParameters);
@@ -59,7 +54,7 @@ export default Ember.Object.create({
         }
 
         else {
-          resolve(FirebaseResponse.create({data: authData}));
+          resolve(FirebaseResponse.create({data: UserItem.createFromResponse(authData) }));
         }
       },
       {scope: "email,user_likes"});
@@ -69,7 +64,7 @@ export default Ember.Object.create({
   //  R O O M S
   getRooms() {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.get('roomsRef').once('value',
+      this.getRoomsRef().once('value',
         (snapshot) => {
           let data = snapshot.val();
           resolve(FirebaseResponse.create({data:data}));
@@ -83,7 +78,7 @@ export default Ember.Object.create({
   },
   getRoom(roomId) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.get('roomsRef').child(roomId).once('value',
+      this.getRoomsRef().child(roomId).once('value',
         (snapshot) => {
           let data = snapshot.val();
           resolve(FirebaseResponse.create({data:data}));
@@ -97,13 +92,13 @@ export default Ember.Object.create({
   },
   createNewRoom(roomName) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      let roomsRef      = this.get('roomsRef');
+      let roomsRef      = this.getRoomsRef();
       let newRoomRef    = roomsRef.push();
 
       let newRoom = {
-        id : newRoomRef.key(),
-        name : roomName,
-        createdAt: Firebase.ServerValue.TIMESTAMP
+        id           : newRoomRef.key(),
+        name         : roomName,
+        createdAt    : Firebase.ServerValue.TIMESTAMP
       };
 
 
@@ -114,37 +109,34 @@ export default Ember.Object.create({
         }
 
         else {
-          let fbResponse = FirebaseResponse.create({data: newRoom});
+          let fbResponse = FirebaseResponse.create({data: RoomItem.create(newRoom)});
           resolve(fbResponse);
         }
       });
     });
   },
-  enterRoom(roomId) {
+  enterRoom(roomId, user) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      let roomRef    = this.get('roomsRef').child(roomId);
-      let userId     = this.get('user.id');
-      let userRef    = roomRef.child('users').child(userId);
+      const roomRef    = this.getRoomsRef().child(roomId);
+      const userId     = Ember.get(user, 'id');
+      const userRef    = roomRef.child('users').child(userId);
 
-      userRef.set({id : userId, active: true},
-        (error) => {
-          if (error) {
-            reject(FirebaseError.create({error:error}));
-          }
+      // callback for user set
+      const onUserSet = (error) => {
+        if (error) {
+          reject(FirebaseError.create({error:error}));
+        }
 
-          else {
-            this.getRoom(roomId)
-              .then((firebaseResponse) => {
-                let room = firebaseResponse.get('data');
-                console.log('got room!', room);
-                resolve(FirebaseResponse.create({data:room}));
-              })
-              .catch((firebaseError) => {
-                let error = firebaseError.get('error');
-                reject(FirebaseError.create({error:error}));
-              });
-          }
-      });
+        else {
+          this.getRoom(roomId)
+            .then((firebaseResponse) => { resolve(firebaseResponse); })
+            .catch((firebaseError) => { reject(firebaseError); });
+        }
+      };
+
+
+      // set user data in database
+      userRef.set({id : userId, active: true}, onUserSet);
 
       // remove user from the room. the user is no longer online
       userRef.onDisconnect().remove();

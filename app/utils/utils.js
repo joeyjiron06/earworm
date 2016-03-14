@@ -64,6 +64,24 @@ export default class Utils {
   }
 
 
+  static addQueryParam(url, key, value) {
+    if (Utils.isNoE(url) || Utils.isNoE(key)) {
+      return null;
+    }
+
+
+    if (url.indexOf('?') === -1) {
+      url += '?';
+    }
+
+    else {
+      url += '&';
+    }
+
+    return `${url}${key}=${value}`;
+
+  }
+
   static secondsToHHMMSS(inSeconds) {
     var sec_num = parseInt(inSeconds, 10); // don't forget the second param
     var hours   = Math.floor(sec_num / 3600);

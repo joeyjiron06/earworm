@@ -4,7 +4,8 @@ import Utils from 'earworm/utils/utils';
 let UserItem = Ember.Object.extend({
   id                 : null,
   authToken          : null,
-  expiryTimeEpoch    : null
+  expiryTimeEpoch    : null,
+  imageUrl           : null
 });
 
 UserItem.reopenClass({
@@ -15,9 +16,10 @@ UserItem.reopenClass({
 
     let user = UserItem.create();
     user.setProperties({
-      id                 : data['uid'],
-      authToken          : data['token'],
-      expiryTimeEpoch    : data['expires']
+      id                 : Ember.get(data, 'uid'),
+      authToken          : Ember.get(data, 'token'),
+      expiryTimeEpoch    : Ember.get(data, 'expires'),
+      imageUrl           : Ember.get(data, 'facebook.profileImageURL')
     });
 
     return user;

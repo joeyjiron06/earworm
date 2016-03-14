@@ -98,5 +98,18 @@
     margin-bottom       : 10px;
   }
 
+  .hp--add-room-area {
+    position            : relative;
+  }
+
+  .hp--create-room-area {
+    position            : absolute;
+    background          : white;
+    left                : -250px;
+    margin-top          : 10px;
+    padding             : 20px;
+    padding-top         : 30px;
+    box-shadow          : rgba(0,0,0,0.15) 2px 2px 4px;
+  }
 
 }

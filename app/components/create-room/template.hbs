@@ -1,0 +1,20 @@
+{{mdl-button isRaised=true text=displayableText isAccent=true action='onButtonClicked'}}
+
+{{#if displayableShowAddRoom}}
+  <div class="create-room-text-area">
+    {{mdl-textfield
+      label='Enter room name here'
+      value=displayableRoomName
+      pattern=displayableRoomNameRegex
+      errorMessage="Only enter alphabets, numbers, _ and -"
+      class='create-room-input-text'
+    }}
+
+    {{mdl-button
+      isRaised=true
+      text='Create'
+      isAccent=false
+      action='createClicked'
+    }}
+  </div>
+{{/if}}

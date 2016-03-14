@@ -79,3 +79,30 @@ test('isFunction', function(assert) {
   assert.ok(!Utils.isFunction([]), 'empty array');
   assert.ok(!Utils.isFunction(0), 'number');
 });
+test('addQueryParam', function(assert) {
+  let url;
+  let acutal;
+  let expected;
+
+  url         = 'http://hello.com';
+  acutal      = Utils.addQueryParam(url, 'hello', 'param');
+  expected    = `${url}?hello=param`;
+  assert.deepEqual(acutal, expected, 'simple add query param case with no other params in url');
+
+
+  url         = 'http://hi.org?look=ma';
+  acutal      = Utils.addQueryParam(url, 'what', 54);
+  expected    = `${url}&what=54`;
+  assert.deepEqual(acutal, expected, 'query param already there just appends to query param list');
+
+  url         = 'http://hi.org?myurl=http%3A%2F%2Fhello.com%3Fthis%3Diswierd';
+  acutal      = Utils.addQueryParam(url, 'another', 'one');
+  expected    = `${url}&another=one`;
+  assert.deepEqual(acutal, expected, 'param with an encoded url stays intact and query param gets added to the end');
+
+  url         = 'http://hi.org?myurl=http://what.io?you=me';
+  acutal      = Utils.addQueryParam(url, 'another', 'two');
+  expected    = `${url}&another=two`;
+  assert.deepEqual(acutal, expected, 'param with an unencoded url stays intact and query param gets added to the end');
+});
+

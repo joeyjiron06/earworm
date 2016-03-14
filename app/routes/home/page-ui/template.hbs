@@ -26,6 +26,7 @@
     class='hp--search-input'
     }}
 
+  {{create-room createClicked='createRoom'}}
 
   {{!-- AVATAR --}}
   <div>
@@ -49,6 +50,11 @@
 
   {{!-- SEARCH RESULTS --}}
   <div class="hp--search-results">
+    {{#if displayableRoomName}}
+      <div>In Room : {{displayableRoomName}}</div>
+    {{/if}}
+
+
     <div class="hp--search-results-title">Results for Sublime</div>
 
     {{#each items as |item|}}
