@@ -95,7 +95,6 @@ export default Ember.Component.extend({
       return;
     }
 
-    debugger;
     FireBase.enterRoom(roomId, this.get('user'))
             .then((firebaseRespone) => {
               console.log('in room!', firebaseRespone.data);
