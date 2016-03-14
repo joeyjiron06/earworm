@@ -10,8 +10,6 @@ export default Ember.Object.create({
 
   // firebase data
   _firebase          : null,
-  _roomsRef : null,
-
 
 
   init() {
@@ -19,12 +17,6 @@ export default Ember.Object.create({
     this.set('_firebase', firebase);
   },
 
-  getFirebase() {
-    return this.get('_firebase');
-  },
-  getRoomsRef() {
-    return this.getFirebase().child('rooms');
-  },
 
   /**
    * @return Ember.RSVP.Promise that resolves to a FirebaseResponse containing a UserItem
@@ -34,7 +26,7 @@ export default Ember.Object.create({
       let sessionParameters = {
         remember: "sessionOnly"
       };
-      this.getFirebase().authAnonymously((error, data) => {
+      this._getFirebase().authAnonymously((error, data) => {
         if (error) {
           reject(FirebaseError.create({error : error}));
         }
@@ -46,14 +38,20 @@ export default Ember.Object.create({
       }, sessionParameters);
     });
   },
+
+  /**
+   * Auth with facebook
+   * @return Ember.RSVP.Promise that resolves to a FirebaseResponse containing a UserItem
+   * */
   authWithFacebookPopup() {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.getFirebase().authWithOAuthPopup("facebook", function(error, authData) {
+      this._getFirebase().authWithOAuthPopup("facebook", function(error, authData) {
         if (error) {
           reject(FirebaseError.create({error: error}));
         }
 
         else {
+          console.log('authed!!!', JSON.stringify(authData));
           resolve(FirebaseResponse.create({data: UserItem.createFromResponse(authData) }));
         }
       },
@@ -64,7 +62,7 @@ export default Ember.Object.create({
   //  R O O M S
   getRooms() {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.getRoomsRef().once('value',
+      this._getRoomsRef().once('value',
         (snapshot) => {
           let data = snapshot.val();
           resolve(FirebaseResponse.create({data:data}));
@@ -78,10 +76,10 @@ export default Ember.Object.create({
   },
   getRoom(roomId) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.getRoomsRef().child(roomId).once('value',
+      this._getRoomsRef().child(roomId).once('value',
         (snapshot) => {
           let data = snapshot.val();
-          resolve(FirebaseResponse.create({data:data}));
+          resolve(FirebaseResponse.create({data:  RoomItem.createFromResponse(data) }));
         },
 
         (error) => {
@@ -92,7 +90,7 @@ export default Ember.Object.create({
   },
   createNewRoom(roomName) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      let roomsRef      = this.getRoomsRef();
+      let roomsRef      = this._getRoomsRef();
       let newRoomRef    = roomsRef.push();
 
       let newRoom = {
@@ -117,7 +115,7 @@ export default Ember.Object.create({
   },
   enterRoom(roomId, user) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      const roomRef    = this.getRoomsRef().child(roomId);
+      const roomRef    = this._getRoomsRef().child(roomId);
       const userId     = Ember.get(user, 'id');
       const userRef    = roomRef.child('users').child(userId);
 
@@ -141,5 +139,14 @@ export default Ember.Object.create({
       // remove user from the room. the user is no longer online
       userRef.onDisconnect().remove();
     });
+  },
+
+
+  // INTERNALS
+  _getFirebase() {
+    return this.get('_firebase');
+  },
+  _getRoomsRef() {
+    return this._getFirebase().child('rooms');
   }
 });

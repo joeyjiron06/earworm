@@ -1,9 +1,15 @@
 import Ember from 'ember';
 import SoundCloud from 'earworm/api/soundcloud/SoundCloud';
-import SearchFixtures from 'earworm/fixtures/soundcloud/search-john-mayer';
 import Earworm from 'earworm/application/earworm';
 import FireBase from 'earworm/api/firebase/firebase';
 import Utils from 'earworm/utils/utils';
+
+const STATE = {
+  NOT_LOADED    : 0,
+  LOADING       : 1,
+  LOADED        : 2,
+  ERROR         : 3
+};
 
 export default Ember.Component.extend({
   tagName                   : 'home-page',
@@ -22,10 +28,32 @@ export default Ember.Component.extend({
   songQueue                 : [],
 
 
+  // room info
+  roomState                 : STATE.NOT_LOADED,
+
+
+  userDeepLink              : Ember.computed.alias('user.facebookDeepLink'),
+
   // displayable items
   displayableUserImage      : Ember.computed.alias('user.imageUrl'),
   displayableShowAddRoom    : false,
   displayableRoomName       : null,
+  displayableRoomTitle      : Ember.computed.alias('room.name'),
+  displayableRoomStatus     : Ember.computed('roomState', function() {
+    const roomState  = this.get('roomState');
+
+    switch (roomState) {
+      case STATE.LOADING:
+        return 'Loading...';
+      case STATE.LOADED:
+        return 'In Room';
+      case STATE.ERROR:
+        return 'Error joining room. Please refresh the page.';
+    }
+
+    return null;
+  }),
+
 
   // LIFECYCLE
   init() {
@@ -33,6 +61,7 @@ export default Ember.Component.extend({
 
     this.set('audio', new Audio());
     this.set('user', Earworm.AppState.get('user'));
+    console.log('user', this.get('user'));
   },
   didInsertElement() {
     this._super(...arguments);
@@ -95,12 +124,18 @@ export default Ember.Component.extend({
       return;
     }
 
+
+    this.set('roomState', STATE.LOADING);
+
     FireBase.enterRoom(roomId, this.get('user'))
             .then((firebaseRespone) => {
               console.log('in room!', firebaseRespone.data);
+              this.set('room', firebaseRespone.data);
+              this.set('roomState', STATE.LOADED);
             })
             .catch((firebaseError) => {
               console.error('error joining room!', firebaseError);
+              this.set('roomState', STATE.ERROR);
             });
   }))
 });

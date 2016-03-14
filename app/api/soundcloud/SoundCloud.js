@@ -1,6 +1,6 @@
 import AppConfig from 'earworm/config/app-config';
 import HTTP from './../../routes/home/old-ui/Http';
-import SearchFixtures from 'earworm/fixtures/soundcloud/search-john-mayer';
+import SearchFixtures from 'earworm/fixtures/search-john-mayer';
 
 
 class SoundCloud {

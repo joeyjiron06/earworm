@@ -29,9 +29,9 @@
   {{create-room createClicked='createRoom'}}
 
   {{!-- AVATAR --}}
-  <div>
+  <a href={{userDeepLink}}>
     <img class="hp--avatar" src="{{{displayableUserImage}}}"/>
-  </div>
+  </a>
 </div>
 
 {{!-- CONTENT AREA --}}
@@ -48,6 +48,8 @@
     {{/each}}
   </div>
 
+
+
   {{!-- SEARCH RESULTS --}}
   <div class="hp--search-results">
     {{#if displayableRoomName}}
@@ -63,6 +65,15 @@
       <div>No items.</div>
     {{/each}}
   </div>
+
+
+
+
+  <div class="hp--room-area mdl-color--grey-900">
+    <div class="hp--room-status">{{displayableRoomStatus}}</div>
+    <div class="hp--room-title">{{displayableRoomTitle}}</div>
+  </div>
+
 </div>
 
 
