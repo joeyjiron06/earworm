@@ -1,10 +1,128 @@
 .login-page {
-  display            : flex;
-  justify-content    : center;
-  align-items        : center;
+  display                  : flex;
+  align-items              : center;
+  background-size          : cover;
+  flex-direction           : column;
+  background               : url('https://images.unsplash.com/photo-1449748040579-354c191a7934?crop=entropy&dpr=2&fit=crop&fm=jpg&h=950&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1700') no-repeat center;
+  background-color         : whitesmoke;
+
+  .login__card {
+    display                : flex;
+    background-color       : whitesmoke;
+    border-radius          : 2px;
+    height                 : 360px;
+  }
+
+  .login__logo-section {
+    display                : block;
+    text-align             : center;
+    color                  : whitesmoke;
+    margin                 : 48px 0;
+  }
+  .login__bg-overlay {
+    //display                : none;
+    position               : absolute;
+    top                    : 0;
+    left                   : 0;
+    right                  : 0;
+    bottom                 : 0;
+    background-color       : rgba(0,0,0,0.7);
+    z-index                : -1;
+  }
+  .login__logo {
+    font-family            : 'Lobster', cursive;
+    font-size              : 4em;
+    line-height            : 1em;
+    //color                  : #444;;
+  }
+
+  .login__fb-button {
+    background-color       : #3b5998;
+    margin-top             : 16px;
+
+    &:hover {
+      background-color       : #3b5998;
+    }
+  }
+  .fb-button-logo {
+    display                : inline-block;
+    width                  : 32px;
+    height                 : 100%;
+    background             : url('/assets/images/icon_facebook.png');
+    background-position    : center;
+    background-repeat      : no-repeat;
+    background-size        : contain;
+  }
+  .fb-button-text {
+    display                : inline-block;
+    margin-left            : 4px;
+  }
+
+  .login__seperator {
+    display                : flex;
+    justify-content        : space-between;
+    align-items            : center;
+    color                  : #444;
+    margin-top             : 32px;
+    opacity                : 0.4;
+  }
+  .login__seperator-text {
+    margin                 : 0 8px;
+    font-size              : 12px;
+    opacity                : 0.8;
+  }
+  .login__seperator-line {
+    height                 : 1px;
+    flex-grow              : 1;
+    background-color       : #444;
+    opacity                : 0.4;
+  }
+
+  .login__form {
+    display                : flex;
+    flex-direction         : column;
+    background-color       : white;
+    padding                : 32px;
+  }
 
 
-  .lp--button-area {
+  .login__button {
+    margin-top             : 16px;
+  }
+  .login__input {
+    //color                  : whitesmoke;
+    //.mdl-textfield__input {
+    //  border-bottom        : 1px solid rgba(240,240,240, 0.2);
+    //}
+    //
+    //.mdl-textfield__label {
+    //  color                : rgba(240,240,240, 0.26);
+    //}
 
+  }
+  .login__info-area {
+    display                : flex;
+    flex-direction         : column;
+    color                  : whitesmoke;
+  }
+
+  .login__sign-up-container {
+    margin-top             : 16px;
+    text-align             : center;
+  }
+
+  .login__forgot-text {
+    margin-top             : 16px;
+    text-align             : center;
+  }
+
+  .login__link-text {
+    color                  : unquote("rgb(#{$color-primary})");
+    cursor                 : pointer;
+    text-align             : center;
+
+    &:hover {
+      text-decoration      : underline;
+    }
   }
 }

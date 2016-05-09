@@ -25,6 +25,7 @@ export default Ember.Component.extend({
   audio                     : null,
   songTitle                 : null,
   user                      : null,
+  room                      : null,
   songQueue                 : [],
 
 
@@ -53,7 +54,23 @@ export default Ember.Component.extend({
 
     return null;
   }),
+  displayableUsersInRoom    : Ember.computed('user', 'room.{users}', function() {
+    let users = Ember.A();
+    let user = this.get('user');
 
+
+    let usersInRoom = this.get('room.users');
+
+    if (!Utils.isNoE(usersInRoom)) {
+      users.addObjects(usersInRoom);
+    }
+
+    else if (!Utils.isNoE(user)) {
+      users = [user];
+    }
+
+    return users;
+  }),
 
   // LIFECYCLE
   init() {
@@ -61,7 +78,6 @@ export default Ember.Component.extend({
 
     this.set('audio', new Audio());
     this.set('user', Earworm.AppState.get('user'));
-    console.log('user', this.get('user'));
   },
   didInsertElement() {
     this._super(...arguments);
@@ -129,8 +145,8 @@ export default Ember.Component.extend({
 
     FireBase.enterRoom(roomId, this.get('user'))
             .then((firebaseRespone) => {
-              console.log('in room!', firebaseRespone.data);
-              this.set('room', firebaseRespone.data);
+              let room = firebaseRespone.data;
+              this.set('room', room);
               this.set('roomState', STATE.LOADED);
             })
             .catch((firebaseError) => {

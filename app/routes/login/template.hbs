@@ -1,1 +1,70 @@
-{{routes.login.page-ui router=this}}
+<div class="login-page page">
+  <div class="login__bg-overlay"></div>
+
+  {{!-- LOGO TITLE --}}
+  <div class="login__logo-section">
+    <div class="login__logo">earworm</div>
+  </div>
+
+
+  {{!-- LOGIN FORM --}}
+  <div class="login__form mdl-shadow--2dp">
+
+    {{mdl-button
+    class='login__fb-button'
+    isRaised=true
+    text='Log in with facebook'
+    isAccent=false
+    action='facebookPressed'}}
+
+
+
+    <div class="login__seperator">
+      <div class="login__seperator-line"></div>
+      <div class="login__seperator-text">or</div>
+      <div class="login__seperator-line"></div>
+    </div>
+
+
+    {{mdl-textfield
+    class='login__input'
+    label='Email'
+    value=_email
+    type='email'
+    errorMessage="Please enter a valid email"}}
+
+
+    {{mdl-textfield
+    class='login__input'
+    label='Password'
+    value=_password
+    type='password'
+    errorMessage="Please enter a valid email"}}
+
+    {{mdl-button
+    class='login__button'
+    isRaised=true
+    text='Log in'
+    isAccent=false
+    disabled=_isButtonDisabled
+    action='createRoomPressed'}}
+
+
+
+    <div class="login__forgot-text">
+      <span class="login__link-text">Forgot password?</span>
+    </div>
+
+
+    <div class="login__sign-up-container">
+      <span>Don't have an account?</span>
+      <span class="login__link-text">Sign Up</span>
+    </div>
+
+
+
+  </div>
+
+
+</div>
+

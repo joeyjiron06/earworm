@@ -4,18 +4,30 @@ import ENV from 'earworm/config/environment';
 var config       =  {
   useFixtures    : false,
 
+
+  urls : {
+    soundcloud :'',
+    firebase : ''
+  },
+
   youtube        : {
     apiKey       : ENV.APP.youtubeApiKey
   },
 
   soundcloud     : {
-    urls         : {
-      BASE       : 'https://api.soundcloud.com'
+    urls       : {
+      BASE     : 'https://api.soundcloud.com'
     },
-    apiKey       : ENV.APP.soundCloudApiKey
+
+
+    apiKey     : ENV.APP.soundCloudApiKey,
+    baseUrl    :  'https://api.soundcloud.com'
   },
 
   firebase : {
+    baseUrl : 'https://earworm.firebaseio.com',
+
+
     urls : {
       BASE : 'https://earworm.firebaseio.com'
     }

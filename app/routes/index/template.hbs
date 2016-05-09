@@ -1,0 +1,32 @@
+<div class="page index-page" style={{_indexPageStyle}}>
+  <div class="index-page__bg-overlay"></div>
+
+
+  <div class="index-page__contents">
+      <div class="index-page__logo">earworm</div>
+      <div class="index-page__subtitle">listen to music with friends</div>
+
+    {{mdl-button
+    class='index-page__button'
+    isRaised=true
+    text='Login / Sign up'
+    isAccent=false
+    action='loginPressed'}}
+
+    {{!--{{mdl-button--}}
+      {{!--class='index-page__button'--}}
+      {{!--isRaised=true--}}
+      {{!--text='Create a room'--}}
+      {{!--isAccent=false--}}
+      {{!--action='createRoomButtonPressed'}}--}}
+  </div>
+
+
+
+{{modal/create-room
+  show=_showModal
+  createClicked='createRoom'}}
+
+
+
+</div>

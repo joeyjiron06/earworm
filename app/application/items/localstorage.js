@@ -4,19 +4,25 @@ import Utils from 'earworm/utils/utils';
 const KEYS = {
   'USER' : 'USER'
 };
-export default Ember.Object.extend({
-  user : {
-    save(data) {
-      save(KEYS.USER, data);
-    },
-    get() {
-      return retrieve(KEYS.USER);
-    },
-    delete() {
-      remove(KEYS.USER);
-    }
+const LSProperty = Ember.Object.extend({
+  key : null,
+
+  save(data) {
+    save(this.get('key'), data);
+  },
+  retrieve() {
+    return retrieve(this.get('key'));
+  },
+  delete() {
+    remove(this.get('key'));
   }
 });
+
+export default Ember.Object.extend({
+  authToken : LSProperty.create({key : 'authToken'})
+});
+
+
 function save(key, value) {
   try {
     if (Utils.isObject(value)) {

@@ -3,9 +3,22 @@ $color-primary: $palette-blue-500;
 $color-accent: $palette-green-300;
 @import 'material-design-lite';
 @import "values/colors";
-@import "pages/page-base";
+
+// PAGES
+@import "pages/page";
 @import "pages/home";
 @import "pages/login";
+@import "pages/index";
+
+
+// COMPONENTS
 @import "component/audio-player";
 @import "component/search-item";
 @import "component/create-room";
+@import "component/user-list";
+@import "component/earworm-logo";
+
+// MODALS
+@import "component/modals/modal";
+@import "component/modals/create-room";
+@import "component/modals/login";

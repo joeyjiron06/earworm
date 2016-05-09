@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Utils from 'earworm/utils/utils';
 import AppConfig from 'earworm/config/app-config';
 import {AudioEvents, AudioProperties} from './Constants';
-import APStateItem from './APStateItem';
+import APStateItem from './PlayerState';
 
 const debug = false;
 
@@ -33,6 +33,9 @@ const DisplayableRange = Ember.Object.extend({
 export default Ember.Component.extend({
   tagName             : 'audio-player',
   classNames          : ['audio-player'],
+
+  // ATTRS
+  playerController    : null,
 
 
   // audio player
@@ -72,6 +75,7 @@ export default Ember.Component.extend({
     this._super.apply(...arguments);
 
     // set new html audio player
+    this.set('audio', new Audio());
     this.set('audioStateItem', APStateItem.create());
     this.registerListener();
   },

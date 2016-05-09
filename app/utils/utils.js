@@ -99,4 +99,8 @@ export default class Utils {
     time    += minutes+':'+seconds;
     return time;
   }
+
+  static random(max) {
+    return Math.floor(Math.random() * (max - 0)) + 0;
+  }
 }

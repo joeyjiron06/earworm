@@ -6,12 +6,19 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+
+
   this.route('routes', {path:''}, function() {
     this.route('dev', function() {
       this.route('audio');
+      this.route('login');
     });
     this.route('home');
     this.route('login');
+    this.route('my-route');
+
+    this.route('room',  { path: '/room/:room_name/:room_id' });
+
   });
 });
 

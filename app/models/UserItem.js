@@ -30,6 +30,10 @@ UserItem.reopenClass({
       facebookDeepLink    : Ember.get(data, 'facebook.cachedUserProfile.link')
     });
 
+    if (Ember.get(data, 'auth.provider') === 'anonymous') {
+      user.set('firstName', user.get('id'));
+    }
+
     return user;
   }
 });

@@ -7,8 +7,8 @@ const UI_STATE       = {
 };
 
 export default Ember.Component.extend({
-  tagName                    : 'create-room',
-  classNames                 : ['create-room'],
+  tagName                    : 'earworm-logo',
+  classNames                 : ['earworm-logo'],
 
   // TEMPLATE VALUES
 

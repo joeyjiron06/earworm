@@ -1,7 +1,14 @@
 import Ember from 'ember';
 
-
 export default Ember.Controller.extend({
-  queryParams:  ['room_id'],
-  room_id : null
+
+
+  // TEMPLATE VALUES
+  _showCreateRoom : false,
+
+  actions : {
+    createRoom() {
+      this.set('_showCreateRoom', true);
+    }
+  }
 });

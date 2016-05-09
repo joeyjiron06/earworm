@@ -72,6 +72,14 @@
   <div class="hp--room-area mdl-color--grey-900">
     <div class="hp--room-status">{{displayableRoomStatus}}</div>
     <div class="hp--room-title">{{displayableRoomTitle}}</div>
+
+
+    {{#if displayableRoomTitle}}
+      <div style="margin-top: 10px">Users</div>
+      {{#each displayableUsersInRoom as |user|}}
+        <div>{{user.firstName}} {{user.lastName}}</div>
+      {{/each}}
+    {{/if}}
   </div>
 
 </div>

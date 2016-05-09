@@ -1,11 +1,33 @@
 .home-page {
-  width                 : 100%;
-  height                : 100%;
-  background-color      : $color-bg;
-  position              : absolute;
+  background-color      : #222;
   display               : flex;
   flex-direction        : column;
+  color                 : whitesmoke;
 
+  .home__welcome-text {
+
+  }
+
+  .home__buttons-container {
+    display             : flex;
+    justify-content     : center;
+    align-items         : center;
+    margin-top: 32px;
+    text-align          : center;
+  }
+
+  .home__join-room-button {
+    margin-left          : 16px;
+  }
+
+
+  .home__content-area {
+    margin: 100px auto;
+  }
+}
+
+
+.home-page-OLD {
   .hp--nav-bar {
     display             : flex;
     align-items         : center;
@@ -120,5 +142,4 @@
     padding-top         : 30px;
     box-shadow          : rgba(0,0,0,0.15) 2px 2px 4px;
   }
-
 }

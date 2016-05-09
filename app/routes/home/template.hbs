@@ -1,3 +1,34 @@
-{{routes/home/page-ui
-  qpRoomId=room_id
-}}
+<div class="home-page page">
+  {{earworm-logo}}
+
+
+  <div class="home__content-area">
+    <div class="home__welcome-text">Hi and welcome to earworm. Here you can enjoy listening to music with others. Just create or join a room to start listening.</div>
+
+    <div class="home__buttons-container">
+      {{mdl-button
+      class='home__create-room-button'
+      isRaised=true
+      text='CREATE A ROOM'
+      isAccent=false
+      action='createRoom'}}
+
+      {{mdl-button
+      class='home__join-room-button'
+      isRaised=true
+      text='JOIN A ROOM'
+      isAccent=true
+      action='joinRoom'}}
+    </div>
+
+  </div>
+
+
+
+  {{#if _showCreateRoom}}
+    {{modal/create-room
+      show=_showCreateRoom}}
+  {{/if}}
+
+
+</div>

@@ -6,6 +6,8 @@ import AppConfig from 'earworm/config/app-config';
 import UserItem from 'earworm/models/UserItem';
 import RoomItem from 'earworm/models/RoomItem';
 
+const debug = false;
+
 export default Ember.Object.create({
 
   // firebase data
@@ -32,6 +34,7 @@ export default Ember.Object.create({
         }
 
         else {
+          debugger;
           let userItem = UserItem.createFromResponse(data);
           resolve(FirebaseResponse.create({data: userItem}));
         }
@@ -51,11 +54,27 @@ export default Ember.Object.create({
         }
 
         else {
-          console.log('authed!!!', JSON.stringify(authData));
+          console.log('authed with facebook', (authData));
           resolve(FirebaseResponse.create({data: UserItem.createFromResponse(authData) }));
         }
       },
       {scope: "email,user_likes"});
+    });
+  },
+
+
+  authWithToken(authToken) {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      this._getFirebase().auth(authToken, function(error, result) {
+        if (error) {
+          reject(FirebaseError.create({error : error}));
+          console.log("Authentication Failed!", error);
+        } else {
+          console.log('result from auth', result);
+          resolve(FirebaseResponse.create({data : UserItem.createFromResponse(result)}));
+        }
+      });
+
     });
   },
 
@@ -76,10 +95,23 @@ export default Ember.Object.create({
   },
   getRoom(roomId) {
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this._getRoomsRef().child(roomId).once('value',
+      let roomRef = this._getRoomsRef().child(roomId);
+
+      roomRef.once('value',
         (snapshot) => {
           let data = snapshot.val();
-          resolve(FirebaseResponse.create({data:  RoomItem.createFromResponse(data) }));
+          let roomItem = RoomItem.createFromResponse(data);
+          roomItem.set('_ref', roomRef);
+
+          this.debug(`getRoom(${roomId})`, data);
+
+
+          let response = FirebaseResponse.create({
+            data       :  roomItem,
+            roomRef    : roomRef
+          });
+
+          resolve(response);
         },
 
         (error) => {
@@ -117,6 +149,16 @@ export default Ember.Object.create({
     return new Ember.RSVP.Promise((resolve, reject) => {
       const roomRef    = this._getRoomsRef().child(roomId);
       const userId     = Ember.get(user, 'id');
+      const userData   = user.getProperties(
+          'id',
+          'authToken',
+          'expiryTimeEpoch',
+          'imageUrl',
+          'firstName',
+          'lastName',
+          'email',
+          'facebookDeepLink'
+      );
       const userRef    = roomRef.child('users').child(userId);
 
       // callback for user set
@@ -134,13 +176,26 @@ export default Ember.Object.create({
 
 
       // set user data in database
-      userRef.set({id : userId, active: true}, onUserSet);
+      userRef.set(userData, onUserSet);
 
       // remove user from the room. the user is no longer online
       userRef.onDisconnect().remove();
     });
   },
+  onUsersChanged(roomId, fn) {
+    let callback  = (usersSnapshot) => {
+      console.log('users changed', usersSnapshot.val());
+      fn(usersSnapshot.val());
+    };
 
+    this._usersChangedCallbackCache[roomId] = callback;
+    this._getUsersRef(roomId).on('child_changed', callback);
+  },
+  offUsersChanged(roomId) {
+    let callback    = this._usersChangedCallbackCache[roomId];
+    delete this._usersChangedCallbackCache[roomId];
+    this._getUsersRef(roomId).off('child_changed', callback);
+  },
 
   // INTERNALS
   _getFirebase() {
@@ -148,5 +203,15 @@ export default Ember.Object.create({
   },
   _getRoomsRef() {
     return this._getFirebase().child('rooms');
+  },
+  _getUsersRef(roomId) {
+    return this._getRoomsRef().child(roomId).child('users');
+  },
+  _usersChangedCallbackCache : {},
+  debug() {
+    if (debug) {
+        console.log(...arguments);
+    }
   }
+
 });
