@@ -1,13 +1,42 @@
-module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+const azure = require('azure-storage');
 
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+function getProps(entry,propNames) {
+    const props = {};
+    propNames.forEach((propName) => {
+        props[propName] = entry[propName]._;
+    });
+    return props;
+}
+
+function parseLoopEntities(result) {
+    return result.entries.map(entry => {
+        const loop = getProps(entry, ['name','instrument', 'scale', 'genre', 'files']);
+        loop.files = loop.files.split(',');
+        return loop;
+    });
+}
+
+
+function fetchLoops() {
+    return new Promise((resolve, reject) => {
+        const tableService = azure.createTableService();
+        const query = new azure.TableQuery().top(50);
+        tableService.queryEntities('loops', query, null, (error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(parseLoopEntities(result));
+            }
+        })
+    })
+}
+
+module.exports = async function (context) {
+    context.log('getloops triggered');
+    
+    const loops = await fetchLoops();
 
     context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
+        body: loops
     };
 }
