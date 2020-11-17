@@ -1,19 +1,13 @@
 {
   "name": "earworm",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joeyjiron06/earworm.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/joeyjiron06/earworm/issues"
-  },
-  "homepage": "https://github.com/joeyjiron06/earworm#readme"
+  "dependencies": {},
+  "devDependencies": {
+    "azure-functions-core-tools": "^2.7.3023"
+  }
 }
