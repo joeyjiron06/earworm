@@ -5,9 +5,9 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
+      "route": "v1/loops",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
